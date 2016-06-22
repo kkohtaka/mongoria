@@ -1,0 +1,7 @@
+# Copyright (c) 2016 Kazumasa Kohtaka. All rights reserved.
+# This file is available under the MIT license.
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mongo-replica-set

@@ -1,0 +1,95 @@
+# Copyright (c) 2016 Kazumasa Kohtaka. All rights reserved.
+# This file is available under the MIT license.
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mongo-node-0
+  namespace: mongo-replica-set
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mongo-node-0
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo-node-0
+        image: mongo
+        args: ['--config', '/etc/mongod.conf']
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "250Mi"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: mongod-conf
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mongo-node-1
+  namespace: mongo-replica-set
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mongo-node-1
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo-node-1
+        image: mongo
+        args: ['--config', '/etc/mongod.conf']
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "250Mi"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: mongod-conf
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: mongo-node-2
+  namespace: mongo-replica-set
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: mongo-node-2
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongo-node-2
+        image: mongo
+        args: ['--config', '/etc/mongod.conf']
+        ports:
+        - containerPort: 27017
+        volumeMounts:
+        - name: config-volume
+          mountPath: /etc
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "250Mi"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: mongod-conf
