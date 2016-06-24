@@ -1,0 +1,25 @@
+# Copyright (c) 2016 Kazumasa Kohtaka. All rights reserved.
+# This file is available under the MIT license.
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mongo-init
+  namespace: mongo-replica-set
+spec:
+  template:
+    metadata:
+      name: mongo-init
+    spec:
+      containers:
+      - name: mongo-init
+        image: mongo
+        command: ['mongo', 'mongo-node-0:27017', '/mnt/run/init.js']
+        volumeMounts:
+        - name: script-volume
+          mountPath: /mnt/run/
+      volumes:
+      - name: script-volume
+        configMap:
+          name: mongo-init-script
+      restartPolicy: Never

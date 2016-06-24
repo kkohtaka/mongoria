@@ -1,0 +1,24 @@
+# Copyright (c) 2016 Kazumasa Kohtaka. All rights reserved.
+# This file is available under the MIT license.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-init-script
+  namespace: mongo-replica-set
+data:
+  init.js: |
+    // Copyright (c) 2016 Kazumasa Kohtaka. All rights reserved.
+    // This file is available under the MIT license.
+
+    rs.initiate({
+      _id: "graylog",
+      version: 1,
+      members: [
+        { _id: 0, host: "mongo-node-0:27017" },
+        { _id: 1, host: "mongo-node-1:27017" },
+        { _id: 2, host: "mongo-node-2:27017" }
+      ]
+    });
+    rs.conf();
+    rs.status();

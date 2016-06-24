@@ -22,12 +22,10 @@ spec:
       containers:
       - name: mongo-node-0
         image: mongo
-        args: ['--config', '/mnt/etc/mongod.conf']
+        args: ['--replSet', 'graylog']
         ports:
         - containerPort: 27017
         volumeMounts:
-        - name: config-volume
-          mountPath: /mnt/etc/
         - name: data-volume
           mountPath: /mnt/data/
         resources:
@@ -35,9 +33,6 @@ spec:
             cpu: "100m"
             memory: "250Mi"
       volumes:
-      - name: config-volume
-        configMap:
-          name: mongod-conf
       - name: data-volume
         emptyDir: {}
 ---
@@ -62,12 +57,10 @@ spec:
       containers:
       - name: mongo-node-1
         image: mongo
-        args: ['--config', '/mnt/etc/mongod.conf']
+        args: ['--replSet', 'graylog']
         ports:
         - containerPort: 27017
         volumeMounts:
-        - name: config-volume
-          mountPath: /mnt/etc/
         - name: data-volume
           mountPath: /mnt/data/
         resources:
@@ -75,9 +68,6 @@ spec:
             cpu: "100m"
             memory: "250Mi"
       volumes:
-      - name: config-volume
-        configMap:
-          name: mongod-conf
       - name: data-volume
         emptyDir: {}
 ---
@@ -102,12 +92,10 @@ spec:
       containers:
       - name: mongo-node-2
         image: mongo
-        args: ['--config', '/mnt/etc/mongod.conf']
+        args: ['--replSet', 'graylog']
         ports:
         - containerPort: 27017
         volumeMounts:
-        - name: config-volume
-          mountPath: /mnt/etc/
         - name: data-volume
           mountPath: /mnt/data/
         resources:
@@ -115,8 +103,5 @@ spec:
             cpu: "100m"
             memory: "250Mi"
       volumes:
-      - name: config-volume
-        configMap:
-          name: mongod-conf
       - name: data-volume
         emptyDir: {}
