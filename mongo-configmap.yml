@@ -13,7 +13,7 @@ data:
 
     storage:
         engine: wiredTiger
-        dbPath: /var/lib/mongodb
+        dbPath: /mnt/data/
         journal:
             enabled: true
 
@@ -28,5 +28,3 @@ data:
     replication:
         oplogSizeMB: 32
         replSetName: graylog
-        secondaryIndexPrefetch: <string>
-        enableMajorityReadConcern: <boolean>

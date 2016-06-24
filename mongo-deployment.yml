@@ -8,21 +8,28 @@ metadata:
   namespace: mongo-replica-set
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+      role: node-0
   template:
     metadata:
       name: mongo-node-0
       labels:
         app: mongo
+        role: node-0
     spec:
       containers:
       - name: mongo-node-0
         image: mongo
-        args: ['--config', '/etc/mongod.conf']
+        args: ['--config', '/mnt/etc/mongod.conf']
         ports:
         - containerPort: 27017
         volumeMounts:
         - name: config-volume
-          mountPath: /etc
+          mountPath: /mnt/etc/
+        - name: data-volume
+          mountPath: /mnt/data/
         resources:
           requests:
             cpu: "100m"
@@ -31,6 +38,8 @@ spec:
       - name: config-volume
         configMap:
           name: mongod-conf
+      - name: data-volume
+        emptyDir: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -39,21 +48,28 @@ metadata:
   namespace: mongo-replica-set
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+      role: node-1
   template:
     metadata:
       name: mongo-node-1
       labels:
         app: mongo
+        role: node-1
     spec:
       containers:
       - name: mongo-node-1
         image: mongo
-        args: ['--config', '/etc/mongod.conf']
+        args: ['--config', '/mnt/etc/mongod.conf']
         ports:
         - containerPort: 27017
         volumeMounts:
         - name: config-volume
-          mountPath: /etc
+          mountPath: /mnt/etc/
+        - name: data-volume
+          mountPath: /mnt/data/
         resources:
           requests:
             cpu: "100m"
@@ -62,6 +78,8 @@ spec:
       - name: config-volume
         configMap:
           name: mongod-conf
+      - name: data-volume
+        emptyDir: {}
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -70,21 +88,28 @@ metadata:
   namespace: mongo-replica-set
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+      role: node-2
   template:
     metadata:
       name: mongo-node-2
       labels:
         app: mongo
+        role: node-2
     spec:
       containers:
       - name: mongo-node-2
         image: mongo
-        args: ['--config', '/etc/mongod.conf']
+        args: ['--config', '/mnt/etc/mongod.conf']
         ports:
         - containerPort: 27017
         volumeMounts:
         - name: config-volume
-          mountPath: /etc
+          mountPath: /mnt/etc/
+        - name: data-volume
+          mountPath: /mnt/data/
         resources:
           requests:
             cpu: "100m"
@@ -93,3 +118,5 @@ spec:
       - name: config-volume
         configMap:
           name: mongod-conf
+      - name: data-volume
+        emptyDir: {}
