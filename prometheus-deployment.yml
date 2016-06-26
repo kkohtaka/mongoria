@@ -1,0 +1,42 @@
+# Copyright (c) 2016 Kazumasa Kohtaka. All rights reserved.
+# This file is available under the MIT license.
+
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: prometheus
+  namespace: mongo-replica-set
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: prometheus
+      role: master
+  template:
+    metadata:
+      name: prometheus
+      labels:
+        app: prometheus
+        role: master
+    spec:
+      containers:
+      - name: prometheus
+        image: prom/prometheus
+        args: ['-config.file', '/mnt/etc/prometheus.yml']
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+        - name: config-volume
+          mountPath: /mnt/etc/
+        - name: data-volume
+          mountPath: /mnt/data/
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "250Mi"
+      volumes:
+      - name: config-volume
+        configMap:
+          name: prometheus-config
+      - name: data-volume
+        emptyDir: {}

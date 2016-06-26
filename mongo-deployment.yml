@@ -18,6 +18,9 @@ spec:
       labels:
         app: mongo
         role: node-0
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9001'
     spec:
       containers:
       - name: mongo-node-0
@@ -28,10 +31,10 @@ spec:
         volumeMounts:
         - name: data-volume
           mountPath: /mnt/data/
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "250Mi"
+      - name: mongo-exporter
+        image: eses/mongodb_exporter
+        ports:
+        - containerPort: 9001
       volumes:
       - name: data-volume
         emptyDir: {}
@@ -53,6 +56,9 @@ spec:
       labels:
         app: mongo
         role: node-1
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9001'
     spec:
       containers:
       - name: mongo-node-1
@@ -63,10 +69,10 @@ spec:
         volumeMounts:
         - name: data-volume
           mountPath: /mnt/data/
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "250Mi"
+      - name: mongo-exporter
+        image: eses/mongodb_exporter
+        ports:
+        - containerPort: 9001
       volumes:
       - name: data-volume
         emptyDir: {}
@@ -88,6 +94,9 @@ spec:
       labels:
         app: mongo
         role: node-2
+      annotations:
+        prometheus.io/scrape: 'true'
+        prometheus.io/port: '9001'
     spec:
       containers:
       - name: mongo-node-2
@@ -98,10 +107,10 @@ spec:
         volumeMounts:
         - name: data-volume
           mountPath: /mnt/data/
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "250Mi"
+      - name: mongo-exporter
+        image: eses/mongodb_exporter
+        ports:
+        - containerPort: 9001
       volumes:
       - name: data-volume
         emptyDir: {}
